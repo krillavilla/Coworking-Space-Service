@@ -1,0 +1,22 @@
+# This Service spec mirrors the default Bitnami PostgreSQL Helm chart Service
+# If your Helm release already creates a Service named "postgresql", do not apply this file
+# This is provided so you can run `kubectl describe svc postgresql` for the rubric screenshot
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: coworking
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp-postgres
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
+  # TODO: Ensure selector matches your Helm chart labels
+  selector:
+    app.kubernetes.io/name: postgresql

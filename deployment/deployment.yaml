@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coworking
+  labels:
+    app: coworking
+    app.kubernetes.io/name: coworking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coworking
+  template:
+    metadata:
+      labels:
+        app: coworking
+        app.kubernetes.io/name: coworking
+    spec:
+      securityContext:
+        runAsUser: 10001
+        runAsNonRoot: true
+        fsGroup: 10001
+      containers:
+        - name: coworking
+          # TODO: Replace with your ECR image URI and desired tag (semantic version)
+          image: 647451364529.dkr.ecr.us-east-1.amazonaws.com/coworking-analytics:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5153
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          envFrom:
+            - configMapRef:
+                name: coworking-config
+            - secretRef:
+                name: coworking-secrets
+          readinessProbe:
+            httpGet:
+              # TODO: Ensure this path matches your Flask health endpoint
+              path: /readiness_check
+              port: 5153
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health_check
+              port: 5153
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            failureThreshold: 3

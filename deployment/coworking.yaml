@@ -30,8 +30,8 @@ spec:
     spec:
       containers:
       - name: coworking
-        image: <DOCKER_IMAGE_URI_FROM_ECR>
-        imagePullPolicy: IfNotPresent
+        image: 647451364529.dkr.ecr.us-east-1.amazonaws.com/coworking-analytics:latest
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /health_check
