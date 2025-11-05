@@ -1,0 +1,10 @@
+# Temporary helper files - not for submission
+SECURITY_AUDIT_REPORT.md
+SCREENSHOT_GUIDE.md
+RESUBMISSION_STEPS.md
+DEPLOYMENT_SETUP.md
+RESUBMISSION_PLAN.md
+
+# Temporary files
+/tmp/
+*.log
