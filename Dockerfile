@@ -1,5 +1,6 @@
 # Python 3.9+ official slim image for a small, secure base
-FROM python:3.11-slim
+# Using AWS Public ECR to avoid Docker Hub rate limits
+FROM public.ecr.aws/docker/library/python:3.11-slim
 
 # Prevent Python from writing .pyc files and enable unbuffered logs
 ENV PYTHONDONTWRITEBYTECODE=1
